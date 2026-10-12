@@ -24,6 +24,7 @@ on Solana mainnet (`exact`) and on Base. No account or API key.
   (RSI, MACD, Bollinger), `GET /api/funding` (OKX perpetual funding),
   `GET /api/gas` (Base and Ethereum fees), `GET /api/yield` (DefiLlama pools),
   `GET /api/portfolio` (holdings of one EVM address on Base and Ethereum).
+- Agent marketplace: /api/market/search and /api/market/quote, $0.005 per call, USDC on Base or Solana; checked seller quotes with evidence fields.
 
 Market data outputs are descriptive, not advice.
 Most errors are not charged; exceptions are listed in https://horizonpulse.dev/llms.txt.
