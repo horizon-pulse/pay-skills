@@ -9,7 +9,8 @@ openapi:
   path: openapi.json
 ---
 
-Horizon Pulse is a set of pay-per-call HTTP APIs for agents. Every paid
+Horizon Pulse is a set of pay-per-call HTTP APIs for agents: 16 paid routes
+(18 operations). Every paid
 operation returns an x402 v2 402 challenge that offers the same price in USDC
 on Solana mainnet (`exact`) and on Base. No account or API key.
 
