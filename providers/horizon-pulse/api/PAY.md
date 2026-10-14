@@ -9,8 +9,8 @@ openapi:
   path: openapi.json
 ---
 
-Horizon Pulse is a set of pay-per-call HTTP APIs for agents: 19 paid routes
-(21 operations). Every paid
+Horizon Pulse is a set of pay-per-call HTTP APIs for agents: 20 paid routes
+(22 operations). Every paid
 operation returns an x402 v2 402 challenge that offers the same price in USDC
 on Solana mainnet (`exact`) and on Base. No account or API key.
 
@@ -28,6 +28,10 @@ on Solana mainnet (`exact`) and on Base. No account or API key.
   tokenized stocks on Base: paused flags, supply, supply cap, multiplier,
   issuer; on-chain token state only, no price; not investment advice),
   $0.002 per call.
+- Monitoring: `GET /api/watch` (whether a public web page or endpoint changed
+  since your last check; pass back the returned state token as `since`; a
+  short diff of added lines; a changed:false answer is charged), $0.002 per
+  call.
 - Crypto market data: `GET /api/pulse` (BTC/ETH/SOL spot), `GET /api/signals`
   (RSI, MACD, Bollinger), `GET /api/funding` (OKX perpetual funding),
   `GET /api/gas` (Base and Ethereum fees), `GET /api/yield` (DefiLlama pools),
