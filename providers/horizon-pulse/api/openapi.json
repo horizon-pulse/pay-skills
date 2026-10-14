@@ -1359,7 +1359,19 @@
                       ]
                     }
                   }
-                }
+                },
+                "anyOf": [
+                  {
+                    "required": [
+                      "url"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "html"
+                    ]
+                  }
+                ]
               },
               "example": {
                 "url": "https://horizonpulse.dev",
@@ -2889,7 +2901,9 @@
             "required": true,
             "description": "Question or topic, 3-200 chars (required). Elections/candidates, health, and a named person's conduct are refused (not charged).",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 200
             },
             "example": "tabs or spaces for indentation"
           },
@@ -4753,16 +4767,22 @@
           },
           "fields": {
             "type": "object",
-            "properties": {
-              "heading": {
-                "type": "string"
-              },
-              "links": {
-                "type": "array",
-                "items": {
+            "description": "Caller-named fields. Each value is a string, an array of strings (all: true), or null (no match; see fieldErrors).",
+            "additionalProperties": {
+              "oneOf": [
+                {
                   "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
                 }
-              }
+              ]
             }
           },
           "fieldErrors": {
