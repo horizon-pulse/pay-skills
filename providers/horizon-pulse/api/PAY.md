@@ -9,8 +9,8 @@ openapi:
   path: openapi.json
 ---
 
-Horizon Pulse is a set of pay-per-call HTTP APIs for agents: 16 paid routes
-(18 operations). Every paid
+Horizon Pulse is a set of pay-per-call HTTP APIs for agents: 17 paid routes
+(19 operations). Every paid
 operation returns an x402 v2 402 challenge that offers the same price in USDC
 on Solana mainnet (`exact`) and on Base. No account or API key.
 
@@ -25,6 +25,9 @@ on Solana mainnet (`exact`) and on Base. No account or API key.
   (RSI, MACD, Bollinger), `GET /api/funding` (OKX perpetual funding),
   `GET /api/gas` (Base and Ethereum fees), `GET /api/yield` (DefiLlama pools),
   `GET /api/portfolio` (holdings of one EVM address on Base and Ethereum).
+- Research: `GET /api/discourse/split` (how public Hacker News and Bluesky
+  posts split on a question; a sample, not a poll), $0.03 per call, USDC on
+  Base, Solana or Polygon, or RLUSD on the XRP Ledger.
 - Agent marketplace: /api/market/search and /api/market/quote, $0.005 per call, USDC on Base or Solana; checked seller quotes with evidence fields.
 
 Market data outputs are descriptive, not advice.
