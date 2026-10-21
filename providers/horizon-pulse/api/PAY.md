@@ -9,7 +9,7 @@ openapi:
   path: openapi.json
 ---
 
-Horizon Pulse: 30 paid x402 routes. 29 cost $0.002-$0.04, same price in USDC on Base, Solana or Polygon or RLUSD on the XRP Ledger (web search, fetch, PDF, screenshot, extract, x402 checks, crypto and chain data). Plus a $1 verified brief (Base USDC only), charged only when it passes its contract: at least 2 claims confirmed and every quote found verbatim (https://horizonpulse.dev/contracts/brief-verified). Discovery: https://horizonpulse.dev/.well-known/x402
+Horizon Pulse: x402 v2 pay-per-call APIs for AI agents, no account or API key. 31 paid routes (as of 2026-10-21): 29 on Base, Solana, Polygon (USDC) and XRP Ledger (RLUSD), plus a $1 verified brief and a $5 seller due-diligence check (Base USDC only). Hosted MCP with 32 tools.
 
 - Web: `GET /api/search` (search with page contents), `GET /api/fetch` (page to
   markdown), `GET|POST /api/extract` (title, links, JSON-LD, CSS-selector
