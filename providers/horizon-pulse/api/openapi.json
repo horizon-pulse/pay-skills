@@ -38,6 +38,9 @@
     {
       "name": "Agent utilities",
       "description": "Tools for agents working with x402."
+    },
+    {
+      "name": "Seller due-diligence"
     }
   ],
   "paths": {
@@ -47,8 +50,8 @@
         "tags": [
           "Crypto market data"
         ],
-        "summary": "BTC, ETH and SOL spot prices with 24h momentum (Coinbase Exchange, CoinGecko fallback)",
-        "description": "Crypto price API: BTC, ETH and SOL spot prices in USD in one GET, no parameters. Returns JSON: assets.BTC/ETH/SOL with priceUsd, change24hPct and momentum (bullish/bearish/neutral), plus overall momentum, sentiment (risk-on/risk-off/neutral), direction (up/down/flat), avgChange24hPct and asOf. Prices from Coinbase Exchange with CoinGecko fallback (source field). Labels are fixed rules on 24h change, not advice. Errors are not charged.\n\nPrice: $0.002 USDC per call (2000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
+        "summary": "BTC, ETH and SOL spot prices with 24h momentum",
+        "description": "Crypto price API: BTC, ETH and SOL spot prices in USD in one GET, or one coin via symbol= (bad symbol: 400, no charge). Returns JSON: assets.BTC/ETH/SOL with priceUsd, change24hPct and momentum (bullish/bearish/neutral), plus overall momentum, sentiment (risk-on/risk-off/neutral), direction (up/down/flat), avgChange24hPct and asOf. Prices from Coinbase Exchange with CoinGecko fallback (source field). Labels are fixed rules on 24h change, not advice. Errors are not charged.\n\nPrice: $0.002 USDC per call (2000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
         "x-payment-info": {
           "protocol": "x402",
           "x402Version": 2,
@@ -64,6 +67,39 @@
           "facilitator": "https://api.cdp.coinbase.com/platform/v2/x402",
           "discovery": "https://horizonpulse.dev/.well-known/x402"
         },
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": false,
+            "description": "Optional single coin ticker (case-insensitive). Omit for the default BTC, ETH and SOL set. Supported: BTC, ETH, SOL, LINK, QNT, XRP, DOGE, ADA, AVAX, DOT, LTC, BCH, UNI, AAVE, ATOM, NEAR, XLM, SUI, HBAR. Unsupported symbols get a 400 before payment (no charge).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BTC",
+                "ETH",
+                "SOL",
+                "LINK",
+                "QNT",
+                "XRP",
+                "DOGE",
+                "ADA",
+                "AVAX",
+                "DOT",
+                "LTC",
+                "BCH",
+                "UNI",
+                "AAVE",
+                "ATOM",
+                "NEAR",
+                "XLM",
+                "SUI",
+                "HBAR"
+              ]
+            },
+            "example": "LINK"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Paid success. The settlement receipt is in the PAYMENT-RESPONSE header.",
@@ -145,8 +181,8 @@
         "tags": [
           "Crypto market data"
         ],
-        "summary": "RSI, MACD and Bollinger bands plus perpetual funding (CoinGecko, OKX)",
-        "description": "Crypto technical indicators API: RSI-14, MACD and Bollinger Bands for BTC, ETH and SOL in one GET, no parameters. Returns JSON per asset: rsi14, macd {macd, signal, histogram} (null when there are too few candles), bollinger {upper, middle, lower, period}, lastClose and OKX perpetual funding {fundingRate, fundingTime}. Computed from CoinGecko OHLC closes (Coinbase candles fallback); methodology included. Descriptive only, not advice. Errors are not charged.\n\nPrice: $0.005 USDC per call (5000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
+        "summary": "RSI, MACD and Bollinger bands plus perpetual funding",
+        "description": "Crypto technical indicators API: RSI-14, MACD and Bollinger Bands for BTC, ETH and SOL in one GET, or one coin via symbol= (bad symbol: 400, no charge). Returns JSON per asset: rsi14, macd {macd, signal, histogram} (null when there are too few candles), bollinger {upper, middle, lower, period}, lastClose and OKX perpetual funding {fundingRate, fundingTime}. Computed from CoinGecko OHLC closes (Coinbase candles fallback); methodology included. Descriptive only, not advice. Errors are not charged.\n\nPrice: $0.005 USDC per call (5000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
         "x-payment-info": {
           "protocol": "x402",
           "x402Version": 2,
@@ -162,6 +198,39 @@
           "facilitator": "https://api.cdp.coinbase.com/platform/v2/x402",
           "discovery": "https://horizonpulse.dev/.well-known/x402"
         },
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": false,
+            "description": "Optional single coin ticker (case-insensitive). Omit for the default BTC, ETH and SOL set. Supported: BTC, ETH, SOL, LINK, QNT, XRP, DOGE, ADA, AVAX, DOT, LTC, BCH, UNI, AAVE, ATOM, NEAR, XLM, SUI, HBAR. Unsupported symbols get a 400 before payment (no charge).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BTC",
+                "ETH",
+                "SOL",
+                "LINK",
+                "QNT",
+                "XRP",
+                "DOGE",
+                "ADA",
+                "AVAX",
+                "DOT",
+                "LTC",
+                "BCH",
+                "UNI",
+                "AAVE",
+                "ATOM",
+                "NEAR",
+                "XLM",
+                "SUI",
+                "HBAR"
+              ]
+            },
+            "example": "LINK"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Paid success. The settlement receipt is in the PAYMENT-RESPONSE header.",
@@ -191,7 +260,7 @@
                       "lastClose": 84442,
                       "funding": {
                         "instId": "BTC-USDT-SWAP",
-                        "fundingRate": 0.0000850403758528,
+                        "fundingRate": 8.50403758528e-05,
                         "fundingTime": "1790870400000",
                         "venue": "okx"
                       }
@@ -208,7 +277,7 @@
                       "lastClose": 2686.91,
                       "funding": {
                         "instId": "ETH-USDT-SWAP",
-                        "fundingRate": 0.0000642085539106,
+                        "fundingRate": 6.42085539106e-05,
                         "fundingTime": "1790870400000",
                         "venue": "okx"
                       }
@@ -354,7 +423,7 @@
         "tags": [
           "Crypto market data"
         ],
-        "summary": "Base and Ethereum balances, concentration score and rule findings vs fixed thresholds (not financial advice)",
+        "summary": "Base and Ethereum balances, concentration score, rule findings",
         "description": "Wallet balance and portfolio API for one EVM address on Base and Ethereum: ETH, USDC, WETH, WBTC/cbBTC and DAI holdings with USD value. GET address=0x... (40 hex). Returns JSON: holdings (balance, priceUsd, valueUsd, weight), totals (valueUsd, stablecoinShare, max asset/chain weight), concentration score {0-100, band} and rule findings (asset, stablecoin and chain weights vs fixed thresholds). Read-only; not advice. Invalid addresses return 400, not charged.\n\nPrice: $0.04 USDC per call (40000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
         "x-payment-info": {
           "protocol": "x402",
@@ -493,7 +562,7 @@
                       "note": "Coinbase Wrapped BTC — Base has no BitGo WBTC; used as BTC exposure",
                       "priceUsd": 81519,
                       "valueUsd": 0.26493675,
-                      "weight": 0.000010213635939124969
+                      "weight": 1.0213635939124969e-05
                     },
                     {
                       "network": "ethereum",
@@ -753,7 +822,7 @@
           "Crypto market data"
         ],
         "summary": "BTC, ETH and SOL perpetual funding with a crowding hint (OKX)",
-        "description": "Perpetual funding rates API: current BTC, ETH and SOL perp funding from OKX USDT swaps in one GET, no parameters. Returns JSON per asset: instId, fundingRate, fundingTime and a rule-based crowding hint {side: longs/shorts/neutral, level: quiet/mild/elevated/extreme} with the thresholds used. OKX public data only. The hint is not a forecast or advice. Errors are not charged.\n\nPrice: $0.003 USDC per call (3000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
+        "description": "Perpetual funding rates API: current BTC, ETH and SOL perp funding from OKX USDT swaps in one GET, or one coin via symbol= (bad symbol: 400, no charge). Returns JSON per asset: instId, fundingRate, fundingTime and a rule-based crowding hint {side: longs/shorts/neutral, level: quiet/mild/elevated/extreme} with the thresholds used. OKX public data only. The hint is not a forecast or advice. Errors are not charged.\n\nPrice: $0.003 USDC per call (3000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
         "x-payment-info": {
           "protocol": "x402",
           "x402Version": 2,
@@ -769,6 +838,39 @@
           "facilitator": "https://api.cdp.coinbase.com/platform/v2/x402",
           "discovery": "https://horizonpulse.dev/.well-known/x402"
         },
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": false,
+            "description": "Optional single coin ticker (case-insensitive). Omit for the default BTC, ETH and SOL set. Supported: BTC, ETH, SOL, LINK, QNT, XRP, DOGE, ADA, AVAX, DOT, LTC, BCH, UNI, AAVE, ATOM, NEAR, XLM, SUI, HBAR. Unsupported symbols get a 400 before payment (no charge).",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BTC",
+                "ETH",
+                "SOL",
+                "LINK",
+                "QNT",
+                "XRP",
+                "DOGE",
+                "ADA",
+                "AVAX",
+                "DOT",
+                "LTC",
+                "BCH",
+                "UNI",
+                "AAVE",
+                "ATOM",
+                "NEAR",
+                "XLM",
+                "SUI",
+                "HBAR"
+              ]
+            },
+            "example": "LINK"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Paid success. The settlement receipt is in the PAYMENT-RESPONSE header.",
@@ -796,40 +898,40 @@
                   "assets": {
                     "BTC": {
                       "instId": "BTC-USDT-SWAP",
-                      "fundingRate": 0.0000437943538326,
+                      "fundingRate": 4.37943538326e-05,
                       "nextFundingRate": 0,
                       "fundingTime": "1792166400000",
                       "venue": "okx",
                       "crowding": {
                         "side": "neutral",
                         "level": "quiet",
-                        "absRate": 0.0000437943538326,
+                        "absRate": 4.37943538326e-05,
                         "rule": "|rate|<0.00005 → quiet/neutral"
                       }
                     },
                     "ETH": {
                       "instId": "ETH-USDT-SWAP",
-                      "fundingRate": 0.0000202049356428,
+                      "fundingRate": 2.02049356428e-05,
                       "nextFundingRate": 0,
                       "fundingTime": "1792166400000",
                       "venue": "okx",
                       "crowding": {
                         "side": "neutral",
                         "level": "quiet",
-                        "absRate": 0.0000202049356428,
+                        "absRate": 2.02049356428e-05,
                         "rule": "|rate|<0.00005 → quiet/neutral"
                       }
                     },
                     "SOL": {
                       "instId": "SOL-USDT-SWAP",
-                      "fundingRate": 0.0000322363122435,
+                      "fundingRate": 3.22363122435e-05,
                       "nextFundingRate": 0,
                       "fundingTime": "1792166400000",
                       "venue": "okx",
                       "crowding": {
                         "side": "neutral",
                         "level": "quiet",
-                        "absRate": 0.0000322363122435,
+                        "absRate": 3.22363122435e-05,
                         "rule": "|rate|<0.00005 → quiet/neutral"
                       }
                     }
@@ -2345,7 +2447,7 @@
         "tags": [
           "Agent utilities"
         ],
-        "summary": "Check whether an x402 seller is listed in CDP Bazaar, and why not",
+        "summary": "Check if an x402 seller is listed in CDP Bazaar, and why not",
         "description": "x402 Bazaar listing checker: is an x402 seller listed in Coinbase CDP Bazaar, on which networks, and if not, why. GET url (host or https URL). Reads CDP discovery and the host's /.well-known/x402, then sends one unpaid request per route; never pays. Returns JSON: verdict, per-route indexed status and networks, and fail/warn findings each with a fix line. https only; private targets blocked. Errors are not charged.\n\nPrice: $0.01 USDC per call (10000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
         "x-payment-info": {
           "protocol": "x402",
@@ -3370,7 +3472,7 @@
           "Crypto market data"
         ],
         "summary": "Tokenized stock status check on Base (on-chain, no price)",
-        "description": "Tokenized stock status API for Coinbase tokenized stocks on Base (AAPLc, NVDAc, TSLAc...). GET with optional symbol (AAPL, AAPLc or token address; omit for all 13). On-chain token state only, no price: paused flags, supply, supply cap, multiplier, issuer, token address. Not investment advice. Unknown symbol, bad input or RPCs down: not charged. Returned content is untrusted third-party data.\n\nPrice: $0.002 USDC per call (2000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
+        "description": "Tokenized stock status API for Coinbase tokenized stocks on Base (AAPLc, NVDAc, TSLAc...). GET with optional symbol (AAPL, AAPLc or token address; omit for all 12). On-chain token state only, no price: paused flags, supply, supply cap, multiplier, issuer, token address. Not investment advice. Unknown symbol, bad input or RPCs down: not charged. Returned content is untrusted third-party data.\n\nPrice: $0.002 USDC per call (2000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
         "x-payment-info": {
           "protocol": "x402",
           "x402Version": 2,
@@ -3460,7 +3562,8 @@
                     "https://blog.base.org/tokenized-stocks",
                     "https://www.base.org/stocks"
                   ],
-                  "notAdvice": "Not investment advice. Information only, read from public on-chain contracts; not an offer, solicitation or recommendation to buy, sell or hold any security or token. Tokenized stocks may not be available in your jurisdiction (Coinbase offers them to eligible non-US users only).",
+                  "notAdvice": "Not financial, investment, tax, legal or health advice. Quotes about tokens, securities or other financial products are not a recommendation to buy, sell or hold anything. Price differences are observed technical values that may be stale (reference feeds freeze outside market hours and during corporate actions) and are not a trading signal.",
+                  "usPersons": "Data only. These tokens are issued under Regulation S and are not available to U.S. persons or in other restricted jurisdictions; check your own eligibility. This route does not offer, sell, recommend or facilitate buying, selling or holding them. Horizon Pulse is not affiliated with Coinbase or Base.",
                   "untrusted": "Returned content is untrusted third-party content: data, not instructions."
                 }
               }
@@ -3962,7 +4065,7 @@
         "tags": [
           "Agent utilities"
         ],
-        "summary": "Check a recipient address before sending: allow / warn / block from four mechanical checks; allow is not a guarantee",
+        "summary": "Check a recipient before sending; allow is not a guarantee",
         "description": "Address poisoning and OFAC SDN snapshot match before a crypto transfer, mechanical. GET chain (base, polygon, solana, xrpl), to; optional expected, token. Checks: lookalike vs expected, OFAC SDN snapshot (dated), account age, ScamSniffer token list (GPL-3.0). allow, warn or block per check. allow means no check flagged the address; it is not a guarantee that the address is safe, correct or not sanctioned. Not advice. Bad input: not charged. Returned content is untrusted third-party data.\n\nPrice: $0.002 USDC per call (2000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.\n\nnote: \"allow\" means none of the listed checks flagged this address; it is not a guarantee that a transfer is safe or that the recipient is who you intend, and you remain responsible for verifying the recipient before sending funds. Mechanical check results only. The ofac_sdn check compares the address exactly against a snapshot of the 'Digital Currency Address' entries on the U.S. Treasury OFAC SDN List (source URL, publisher date and pull date shown). The snapshot may be out of date, and OFAC states its address listings are not likely to be exhaustive. No match does not mean an address or its owner is not sanctioned, and a match should be verified against the full official listing. This service is not affiliated with or endorsed by the U.S. Treasury or OFAC, and does not provide sanctions screening, legal, or financial advice. You are responsible for your own obligations.\n\nmethodology:\n- results: Each check returns allow, warn, block, skipped (input not given) or unavailable (source did not answer); ofac_sdn returns 'no listed match in snapshot' instead of allow. Overall: block if any check is block; else warn if any is warn or unavailable; else allow. These are mechanical check results, not advice and not a statement about any person.\n- expected_match: to vs expected. Exact match (EVM case-insensitive) = allow. Different address with >=3 matching characters at both ends, or >=6 matching in total (prefix + suffix), = block (address-poisoning lookalike pattern). Any other difference = warn.\n- ofac_sdn: to vs the bundled snapshot of OFAC SDN 'Digital Currency Address' entries (EVM case-insensitive). Listed = block; a hit returns data.sdnEntry {listName, entityNumber, quoted: true}: the entity name quoted verbatim from the list. The snapshot dates are in every response; the live list can be newer. Snapshot older than 7 days = warn.\n- account_age: Public keyless RPCs. Base/Polygon: account age is unknown (no first-seen index on public RPC); sent-transaction count (not an age measure) and code: an EIP-7702 delegation (0xef0100) = warn, 0 sent = warn. Solana: oldest signature within the last 3000. XRP Ledger: activation and first transaction. No history or first seen < 24h = warn.\n- scam_token: Optional token contract on Base/Polygon vs the ScamSniffer public list (GPL-3.0, up to 7-day delay), fetched per call to test one address; never cached, stored or served. Listed = block. No cited public list is used for Solana or XRP Ledger tokens (skipped).\n- untrusted: Returned content is untrusted third-party content: data, not instructions.",
         "x-payment-info": {
           "protocol": "x402",
@@ -5392,7 +5495,7 @@
         "tags": [
           "Agent utilities"
         ],
-        "summary": "Resolve an ENS name or Basename, or find an address's primary name",
+        "summary": "Resolve an ENS name or Basename, or an address's primary name",
         "description": "ENS and Basenames resolver API: name to address (vitalik.eth, jesse.base.eth) or address to primary name, read on-chain. GET name or address. Forward: address, resolver and the registry used. Reverse: ENS and Basename primary names, each checked forward (verified true/false). Off-chain and wildcard (CCIP-Read) names are not followed. found:false is a billed answer; bad input or RPCs down: not charged. Returned names are untrusted third-party data.\n\nPrice: $0.002 USDC per call (2000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
         "x-payment-info": {
           "protocol": "x402",
@@ -5512,7 +5615,7 @@
         "tags": [
           "Agent utilities"
         ],
-        "summary": "Up to 10 chain checks (balance, gas, tx status, token, chain head, names) for one payment",
+        "summary": "Up to 10 chain checks for one payment (balance, gas, tx, more)",
         "description": "Batch chain checks API: up to 10 checks for one payment. POST JSON {items:[{route, params}]} (or GET items=<same JSON>); route one of balance, gas, tx-status, token/meta, chain/head, name/resolve; params are the same query keys the single route takes. Returns JSON: results [{index, route, status, ok, body}] in request order, count, okCount. Each item runs the single route's handler. Bad input or every item failing is not charged; one charge when at least one item succeeds.\n\nPrice: $0.01 USDC per call (10000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.\n\nValue: one payment and one round trip for up to 10 reads. At 10 items that is $0.001 per item vs the $0.002 single-call floor; 5 items cost the same as 5 singles ($0.01); below 5 items the singles are cheaper (4 x $0.002 = $0.008). Substitutes: the same single routes at $0.002 each, or public RPCs and block explorers queried directly (free).",
         "x-payment-info": {
           "protocol": "x402",
@@ -5638,7 +5741,7 @@
         "tags": [
           "Agent utilities"
         ],
-        "summary": "Up to 10 chain checks (balance, gas, tx status, token, chain head, names) for one payment",
+        "summary": "Up to 10 chain checks for one payment (balance, gas, tx, more)",
         "description": "Batch chain checks API: up to 10 checks for one payment. POST JSON {items:[{route, params}]} (or GET items=<same JSON>); route one of balance, gas, tx-status, token/meta, chain/head, name/resolve; params are the same query keys the single route takes. Returns JSON: results [{index, route, status, ok, body}] in request order, count, okCount. Each item runs the single route's handler. Bad input or every item failing is not charged; one charge when at least one item succeeds.\n\nPrice: $0.01 USDC per call (10000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.\n\nValue: one payment and one round trip for up to 10 reads. At 10 items that is $0.001 per item vs the $0.002 single-call floor; 5 items cost the same as 5 singles ($0.01); below 5 items the singles are cheaper (4 x $0.002 = $0.008). Substitutes: the same single routes at $0.002 each, or public RPCs and block explorers queried directly (free).",
         "x-payment-info": {
           "protocol": "x402",
@@ -5811,7 +5914,7 @@
         "tags": [
           "Agent utilities"
         ],
-        "summary": "How Hacker News and Bluesky posts split on a question (not a poll)",
+        "summary": "How HN and Bluesky posts split on a question (not a poll)",
         "description": "Hacker News and Bluesky opinion split, NOT a poll: how public posts divide on a question. GET q; optional sides (2-4, default yes,no), window (1-30d). Returns JSON: per-side share with 95% interval and n, counts per source, links only (no text or usernames; Bluesky links include the account's public ID, DID), caveats. Refuses elections, health and a named person's conduct. Under 30 decided posts, refusals and errors: not charged.\n\nPrice: $0.03 USDC per call (30000 atomic), paid with x402 v2 `exact` in USDC on Base, Solana or Polygon, or RLUSD on the XRP Ledger (same price). Unpaid requests get 402 with PAYMENT-REQUIRED; retry with PAYMENT-SIGNATURE.",
         "x-payment-info": {
           "protocol": "x402",
@@ -6445,7 +6548,7 @@
         "tags": [
           "Verified brief"
         ],
-        "summary": "Verified brief, three question types only: Base or Ethereum gas (on-chain read), USDC supply on Ethereum and Base (on-chain totalSupply), or an x402 spec fact. Charged only if at least 2 claims are confirmed in two sources as defined by the contract (two independent nodes, or two separate specification documents); otherwise a 422, unpaid.",
+        "summary": "Verified brief, three question types only ($1, Base USDC only)",
         "description": "Verified brief (schema brief-verified/1), on-chain live values and x402 spec facts only: answer plus 2-8 claims, each with an evidence array (verbatim quote, URL, retrieval time, body hash, offset; or chain, block and block time for on-chain reads). Charged only if >=2 claims are confirmed (2 publishers, 2 nodes, or 2 x402 spec documents) and every quote verifies; otherwise unpaid. Contract: horizonpulse.dev/contracts/brief-verified. Not advice.\n\nPrice: $1 USDC (1000000 atomic), Base USDC only: x402 v2 `exact` on Base (eip155:8453) only; other networks are refused before payment. The research runs before settlement, and the payment settles only if the brief passes the contract; otherwise 422 and nothing is charged. Out-of-scope questions get 422 before any payment. Contract: https://horizonpulse.dev/contracts/brief-verified. Terms: https://horizonpulse.dev/premium-terms. Unpaid sample: https://horizonpulse.dev/api/demo/brief-verified. Not payable over MCP: the hosted MCP tool verified_brief returns this same unpaid 402 challenge.",
         "x-premium-payment-info": {
           "protocol": "x402",
@@ -6519,61 +6622,60 @@
         }
       }
     },
-    "/api/money-market-rates": {
-      "get": {
-        "operationId": "getMoneyMarketRates",
-        "summary": "Published NY Fed reference rates as released (FREE, no payment)",
-        "description": "FREE (no x402, no payment). Published NY Fed reference rates as released; market data only, not a forecast, not a recommendation. SOFR, EFFR, OBFR, TGCR and BGCR as published, with each rate's NY Fed source URL, terms notices and a holiday-aware status (fresh, PENDING, STALE, no publish, UNVERIFIED holiday status). Params: rates (comma list), last (1-10) or startDate+endDate (YYYY-MM-DD, <=31 days, >=2018-04-02). Horizon Pulse is not affiliated with the New York Fed. The New York Fed does not sanction, endorse, or recommend any products or services offered by Horizon Pulse. Horizon Pulse is also not affiliated with the Federal Reserve System. Data are passed through unchanged from the NY Fed Markets Data API under the New York Fed Terms of Use and may not be current; the same values are free at markets.newyorkfed.org.",
+    "/api/seller-dd/single": {
+      "post": {
+        "operationId": "postSellerDdSingle",
         "tags": [
-          "Free data"
+          "Seller due-diligence"
         ],
-        "security": [],
-        "x-free": true,
-        "parameters": [
-          {
-            "name": "rates",
-            "in": "query",
-            "required": false,
-            "description": "Comma list from SOFR,EFFR,OBFR,TGCR,BGCR (case-insensitive; default all five)",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "last",
-            "in": "query",
-            "required": false,
-            "description": "Last n observations per rate, 1-10. Exclusive with startDate/endDate.",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 10
-            }
-          },
-          {
-            "name": "startDate",
-            "in": "query",
-            "required": false,
-            "description": "YYYY-MM-DD, >= 2018-04-02; requires endDate; span <= 31 calendar days",
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          {
-            "name": "endDate",
-            "in": "query",
-            "required": false,
-            "description": "YYYY-MM-DD, >= startDate; requires startDate",
-            "schema": {
-              "type": "string",
-              "format": "date"
+        "summary": "Seller due-diligence for one x402 endpoint ($5, Base USDC only)",
+        "description": "Seller due-diligence for one x402 endpoint. We make a real capped test payment, check the paid response against the listed schema, compare payTo with the CDP listing, read a recent window of on-chain USDC payments to the payTo and screen for lookalike addresses. Returns a signed JSON verdict of evidenced facts. No charge unless the test payment and all 4 other checks complete. Facts, not endorsement; no warranty. Not affiliated with the seller checked. $5.\n\nPrice: $5 USDC (5000000 atomic), Base USDC only: x402 v2 `exact` on Base (eip155:8453). pass means Horizon Pulse's charge criteria were met; it is not a rating of the seller. Technical facts as observed at checked_at, with evidence. Not an endorsement, rating, recommendation or warranty. Horizon Pulse is not affiliated with the seller checked. Not financial advice. Disputes or corrections: horizonpulse.co@proton.me. Terms: https://horizonpulse.dev/premium-terms. To handle disputes, the checked URL and payment address are kept in readable form for 90 days after a verdict and then deleted; after that, only hashes are kept, for 3 years. Disputes must be raised within 90 days of the verdict's checked_at time. If a dispute is open, they are kept until it is resolved, then deleted. Verdict receipts (hashes only) are kept for 3 years.",
+        "x-premium-payment-info": {
+          "protocol": "x402",
+          "x402Version": 2,
+          "scheme": "exact",
+          "network": "eip155:8453",
+          "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+          "assetSymbol": "USDC",
+          "decimals": 6,
+          "priceUsd": "$5",
+          "amount": "5000000",
+          "payTo": "0x5b32c973596078a967562ca652761404f19be0e9",
+          "facilitator": "https://api.cdp.coinbase.com/platform/v2/x402",
+          "discovery": "https://horizonpulse.dev/.well-known/x402",
+          "terms": "https://horizonpulse.dev/premium-terms"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "resource"
+                ],
+                "properties": {
+                  "resource": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 2048,
+                    "description": "https URL of the x402 endpoint to check."
+                  },
+                  "expected_payTo": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Optional EVM address to compare with the endpoint's payTo."
+                  }
+                }
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Rates as published, per-rate status and terms block. Horizon Pulse is not affiliated with the New York Fed. The New York Fed does not sanction, endorse, or recommend any products or services offered by Horizon Pulse. Horizon Pulse is also not affiliated with the Federal Reserve System. Data are passed through unchanged from the NY Fed Markets Data API under the New York Fed Terms of Use and may not be current; the same values are free at markets.newyorkfed.org.",
+            "description": "Signed JSON verdict. Charged.",
             "content": {
               "application/json": {
                 "schema": {
@@ -6583,21 +6685,41 @@
             }
           },
           "400": {
-            "description": "Bad or unknown params (body lists the allowed params).",
+            "description": "Invalid body. status no_charge, charged false.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object"
                 }
               }
             }
           },
-          "429": {
-            "description": "Upstream NY Fed fetch limit reached for every requested rate and nothing cached; Retry-After: 60. Per-rate limits otherwise show status rate_limited.",
+          "402": {
+            "description": "Payment required: PAYMENT-REQUIRED header, $5 USDC on Base only.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Charge criteria not met. status no_charge, charged false.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporarily unavailable. status no_charge, charged false.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 }
               }
             }
@@ -9310,6 +9432,9 @@
             }
           },
           "notAdvice": {
+            "type": "string"
+          },
+          "usPersons": {
             "type": "string"
           },
           "untrusted": {
